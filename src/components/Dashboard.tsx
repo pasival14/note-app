@@ -20,8 +20,12 @@ export default function Dashboard() {
       if (!res.ok) throw new Error("Failed to fetch notes");
       const data = await res.json();
       setNotes(data.data);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -50,8 +54,12 @@ export default function Dashboard() {
       setContent("");
       setShowCreateForm(false);
       fetchNotes();
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred");
+      }
     } finally {
       setIsCreating(false);
     }
@@ -76,8 +84,12 @@ export default function Dashboard() {
       }
       
       setNotes(notes.filter((note) => note._id !== noteId));
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unknown error occurred");
+      }
     } finally {
       setDeletingNoteId(null);
     }
@@ -173,7 +185,7 @@ export default function Dashboard() {
           
           <div className="space-y-4">
             {notes.length > 0 ? (
-              notes.map((note, index) => (
+              notes.map((note) => (
                 <div
                   key={note._id}
                   className="bg-white rounded-lg shadow-sm border p-4 flex justify-between items-center"

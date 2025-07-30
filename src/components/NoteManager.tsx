@@ -18,8 +18,12 @@ export default function NoteManager() {
       if (!res.ok) throw new Error("Failed to fetch notes");
       const data = await res.json();
       setNotes(data.data);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -46,8 +50,12 @@ export default function NoteManager() {
 
       setContent(""); // Clear input field
       fetchNotes(); // Re-fetch notes to show the new one
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred");
+      }
     }
   };
   
@@ -62,8 +70,12 @@ export default function NoteManager() {
       }
       // Remove the note from the local state to update UI instantly
       setNotes(notes.filter((note) => note._id !== noteId));
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unknown error occurred");
+      }
     }
   };
 
