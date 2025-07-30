@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HD Notes - Note Taking Application
+
+A modern, full-stack note-taking application built with Next.js, TypeScript, and MongoDB.
+
+## Features
+
+- **Google Authentication** - Secure sign-in with Google OAuth
+- **Note Management** - Create, view, and delete personal notes
+- **Modern UI** - Clean, responsive design with Tailwind CSS
+- **Real-time Updates** - Instant UI updates after actions
+- **Mobile Responsive** - Works perfectly on all devices
+- **API-first** - RESTful API endpoints for all note operations
+- **Secure** - Notes are private to each authenticated user
+
+## Tech Stack
+
+- **Frontend**: React.js with TypeScript (Next.js App Router)
+- **Backend**: Next.js API routes with TypeScript
+- **Database**: MongoDB with Mongoose ODM
+- **Authentication**: NextAuth.js (Google provider, JWT sessions)
+- **Styling**: Tailwind CSS
+- **Deployment**: Vercel
+
+## Project Structure
+
+```
+src/
+├── app/                    # Next.js App Router
+│   ├── api/                # API routes
+│   │   ├── notes/          # Note CRUD endpoints
+│   │   └── auth/           # Authentication endpoints
+│   ├── layout.tsx          # Root layout
+│   └── page.tsx            # Main page
+├── components/             # React UI components
+├── lib/                    # Utilities (db, auth)
+├── models/                 # Mongoose models
+├── types/                  # TypeScript type definitions
+```
+
+## Main Components
+
+- **Dashboard**: Displays user notes, allows creation and deletion, and shows user info.
+- **AuthPage**: Handles Google sign-in and displays a welcome message.
+- **NoteManager**: (If used separately) Manages note CRUD operations.
+- **AuthButtons**: Shows sign-in/sign-out buttons and user avatar.
+
+## API Endpoints
+
+### Notes
+
+- `GET /api/notes`  
+  Returns all notes for the authenticated user.
+
+- `POST /api/notes`  
+  Creates a new note for the authenticated user.  
+  **Body:** `{ content: string }`
+
+- `DELETE /api/notes/[id]`  
+  Deletes a note by ID (only if it belongs to the authenticated user).
+
+### Authentication
+
+- `POST /api/auth/[...nextauth]`  
+  Handles authentication via NextAuth.js (Google provider).
+
+## Data Model
+
+**Note**
+
+- `content` (string, required, max 2000 chars)
+- `userId` (string, required)
+- `createdAt` (Date, auto)
+- `updatedAt` (Date, auto)
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Node.js 18+
+- MongoDB database
+- Google OAuth credentials
+
+### Environment Variables
+
+Create a `.env.local` file in the root:
+
+```
+MONGODB_URI=your_mongodb_connection_string
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+NEXTAUTH_SECRET=your_nextauth_secret
+NEXTAUTH_URL=http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Set up environment variables
+4. Run the development server: `npm run dev`
+5. Open [http://localhost:3000](http://localhost:3000)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Deployment
 
-## Learn More
+- Deploy on Vercel for best results.
+- Set environment variables in the Vercel dashboard.
 
-To learn more about Next.js, take a look at the following resources:
+## Security
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- All note endpoints require authentication.
+- Users can only access and delete their own notes.
+- JWT-based sessions for stateless authentication.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
