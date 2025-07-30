@@ -15,7 +15,7 @@ export async function GET() {
   try {
     const notes = await Note.find({ userId: session.user.id }).sort({ createdAt: -1 });
     return NextResponse.json({ success: true, data: notes });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ success: false, error: "Server Error" }, { status: 500 });
   }
 }
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ success: true, data: note }, { status: 201 });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ success: false, error: "Server Error" }, { status: 500 });
   }
 } 

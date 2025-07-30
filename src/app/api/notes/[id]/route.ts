@@ -36,7 +36,7 @@ export async function DELETE(
       { success: true, message: "Note deleted" },
       { status: 200 }
     );
-  } catch (error) {
+  } catch {
     return NextResponse.json({ success: false, error: "Server Error" }, { status: 500 });
   }
 } 
