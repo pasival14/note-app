@@ -13,7 +13,7 @@ export async function GET() {
   await dbConnect();
 
   try {
-    const notes = await Note.find({ userId: session.user.id }).sort({ createdAt: -1 });
+    const notes = await Note.find({ userId: (session as { user: { id: string } }).user.id }).sort({ createdAt: -1 });
     return NextResponse.json({ success: true, data: notes });
   } catch {
     return NextResponse.json({ success: false, error: "Server Error" }, { status: 500 });
@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
   try {
     const note = await Note.create({
       content: content.trim(),
-      userId: session.user.id,
+      userId: (session as { user: { id: string } }).user.id,
     });
 
     return NextResponse.json({ success: true, data: note }, { status: 201 });

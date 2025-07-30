@@ -23,7 +23,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Note not found" }, { status: 404 });
     }
 
-    if (note.userId.toString() !== session.user.id) {
+    if (note.userId.toString() !== (session as { user: { id: string } }).user.id) {
       return NextResponse.json(
         { error: "User not authorized to delete this note" },
         { status: 403 }

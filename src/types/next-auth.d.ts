@@ -1,5 +1,4 @@
-import NextAuth from "next-auth";
-import mongoose from 'mongoose';
+
 
 declare module "next-auth" {
   interface Session {
